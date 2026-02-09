@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Be My Valentine ❤️</title>
+
+<style>
+  body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #ffd1dc, #ffe4e1);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .card {
+    background: white;
+    padding: 40px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    max-width: 400px;
+  }
+
+  h1 {
+    margin-bottom: 20px;
+  }
+
+  button {
+    padding: 12px 25px;
+    font-size: 18px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    margin: 10px;
+    transition: 0.3s;
+  }
+
+  .yes {
+    background-color: #ff4d6d;
+    color: white;
+  }
+
+  .no {
+    background-color: #ddd;
+    position: relative;
+  }
+</style>
+</head>
+
+<body>
+
+<!-- Background Music -->
+<audio autoplay loop>
+  <source src="https://www.bensound.com/bensound-music/bensound-romantic.mp3" type="audio/mpeg">
+</audio>
+
+<div class="card">
+  <h1 id="message">Hey Jhanvi ❤️</h1>
+  <button onclick="nextMessage()">Next</button>
+</div>
+
+<script>
+  const messages = [
+    "Hey Jhanvi ❤️",
+    "I have something important to ask you...",
+    "You make my life so much better ✨",
+    "Jhanvi, will you be my Valentine? 💖"
+  ];
+
+  let step = 0;
+
+  function nextMessage() {
+    step++;
+
+    if (step < messages.length) {
+      document.getElementById("message").innerText = messages[step];
+    }
+
+    if (step === messages.length - 1) {
+      document.querySelector(".card").innerHTML = `
+        <h1>Jhanvi, will you be my Valentine? 💖</h1>
+        <button class="yes" onclick="sayYes()">Yes 💕</button>
+        <button class="no" onmouseover="moveNo(this)">No 😢</button>
+      `;
+    }
+  }
+
+  function sayYes() {
+    document.querySelector(".card").innerHTML = `
+      <h1>YAY!!! ❤️</h1>
+      <p>You just made me the happiest person alive 🥰</p>
+    `;
+  }
+
+  function moveNo(button) {
+    const x = Math.random() * 200 - 100;
+    const y = Math.random() * 200 - 100;
+    button.style.transform = `translate(${x}px, ${y}px)`;
+  }
+</script>
+
+</body>
+</html>
