@@ -104,7 +104,7 @@
       <h1>YAY!!! ❤️</h1>
       <p>You just made me the happiest person alive 🥰</p>
     `;
-    launchConfetti(); // 🎉 Confetti when Yes is clicked
+    launchHeartConfetti();
   }
 
   function moveNo(button) {
@@ -113,39 +113,39 @@
     button.style.transform = `translate(${x}px, ${y}px)`;
   }
 
-  // 🎉 Confetti Function
-  function launchConfetti() {
-    const colors = ["#ff4d6d", "#ffb6c1", "#ffd1dc", "#ffe4e1", "#fff"];
+  // ❤️ Heart Confetti Function
+  function launchHeartConfetti() {
+    const colors = ["#ff4d6d", "#ffb6c1", "#ffd1dc", "#ffe4e1"];
     for (let i = 0; i < 100; i++) {
-      const confetti = document.createElement("div");
-      confetti.style.position = "fixed";
-      confetti.style.width = "8px";
-      confetti.style.height = "8px";
-      confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-      confetti.style.top = "0px";
-      confetti.style.left = Math.random() * window.innerWidth + "px";
-      confetti.style.opacity = Math.random();
-      confetti.style.borderRadius = "50%";
-      confetti.style.pointerEvents = "none";
-      confetti.style.zIndex = 9999;
-      document.body.appendChild(confetti);
+      const heart = document.createElement("div");
+      heart.innerHTML = "❤️";
+      heart.style.position = "fixed";
+      heart.style.fontSize = Math.random() * 24 + 16 + "px"; // 16px to 40px
+      heart.style.top = "-50px";
+      heart.style.left = Math.random() * window.innerWidth + "px";
+      heart.style.opacity = Math.random() * 0.8 + 0.2;
+      heart.style.pointerEvents = "none";
+      heart.style.zIndex = 9999;
 
-      const fallDuration = Math.random() * 3 + 2; // 2-5 seconds
-      confetti.animate(
+      document.body.appendChild(heart);
+
+      const endX = Math.random() * window.innerWidth - heart.offsetLeft;
+      const endY = window.innerHeight + 50;
+      const rotate = Math.random() * 720;
+
+      heart.animate(
         [
-          { transform: `translateY(0px) rotate(0deg)` },
-          { transform: `translateY(${window.innerHeight + 50}px) rotate(${Math.random()*360}deg)` }
+          { transform: `translate(0, 0) rotate(0deg)` },
+          { transform: `translate(${endX}px, ${endY}px) rotate(${rotate}deg)` }
         ],
         {
-          duration: fallDuration * 1000,
+          duration: Math.random() * 3000 + 3000, // 3-6 seconds
           iterations: 1,
-          easing: "linear"
+          easing: "ease-out"
         }
       );
 
-      setTimeout(() => {
-        confetti.remove();
-      }, fallDuration * 1000);
+      setTimeout(() => heart.remove(), 6000);
     }
   }
 </script>
