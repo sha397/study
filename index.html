@@ -14,6 +14,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    overflow-x: hidden;
   }
 
   .card {
@@ -76,10 +77,9 @@
   let musicStarted = false;
 
   function nextMessage() {
-    // Start music on first click
     if (!musicStarted) {
       const music = document.getElementById("bg-music");
-      music.volume = 0.7; // optional: softer volume
+      music.volume = 0.7;
       music.play();
       musicStarted = true;
     }
@@ -104,12 +104,49 @@
       <h1>YAY!!! ❤️</h1>
       <p>You just made me the happiest person alive 🥰</p>
     `;
+    launchConfetti(); // 🎉 Confetti when Yes is clicked
   }
 
   function moveNo(button) {
     const x = Math.random() * 200 - 100;
     const y = Math.random() * 200 - 100;
     button.style.transform = `translate(${x}px, ${y}px)`;
+  }
+
+  // 🎉 Confetti Function
+  function launchConfetti() {
+    const colors = ["#ff4d6d", "#ffb6c1", "#ffd1dc", "#ffe4e1", "#fff"];
+    for (let i = 0; i < 100; i++) {
+      const confetti = document.createElement("div");
+      confetti.style.position = "fixed";
+      confetti.style.width = "8px";
+      confetti.style.height = "8px";
+      confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+      confetti.style.top = "0px";
+      confetti.style.left = Math.random() * window.innerWidth + "px";
+      confetti.style.opacity = Math.random();
+      confetti.style.borderRadius = "50%";
+      confetti.style.pointerEvents = "none";
+      confetti.style.zIndex = 9999;
+      document.body.appendChild(confetti);
+
+      const fallDuration = Math.random() * 3 + 2; // 2-5 seconds
+      confetti.animate(
+        [
+          { transform: `translateY(0px) rotate(0deg)` },
+          { transform: `translateY(${window.innerHeight + 50}px) rotate(${Math.random()*360}deg)` }
+        ],
+        {
+          duration: fallDuration * 1000,
+          iterations: 1,
+          easing: "linear"
+        }
+      );
+
+      setTimeout(() => {
+        confetti.remove();
+      }, fallDuration * 1000);
+    }
   }
 </script>
 
