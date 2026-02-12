@@ -1,6 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>For Jhanvi ❤️</title>
   <style>
     body {
@@ -35,9 +37,15 @@
     .no {
       background-color: #ccc;
     }
+
+    #typewriter {
+      font-size: 18px;
+      margin-top: 20px;
+      color: #ff4d6d;
+      font-weight: bold;
+    }
   </style>
 </head>
-
 <body>
 
 <div class="card">
@@ -61,7 +69,6 @@ let step = 0;
 let musicStarted = false;
 
 function nextMessage() {
-
   if (!musicStarted) {
     const music = document.getElementById("bg-music");
     if (music) {
@@ -89,15 +96,81 @@ function nextMessage() {
 function moveNo(button) {
   const x = Math.random() * 200 - 100;
   const y = Math.random() * 200 - 100;
-  button.style.transform = `translate(${x}px, ${y}px)`;
+  button.style.transform = \`translate(\${x}px, \${y}px)\`;
 }
 
 function sayYes() {
   document.querySelector(".card").innerHTML = `
-    <h1>YAY!!! ❤️</h1>
-    <p>You just made me the happiest person alive 🥰</p>
-    <p>📍 <strong>165/183 City Road, Southbank, 3006</strong></p>
+    <div id="romanticBox" style="opacity:0; transition:opacity 2s ease;">
+      <h1>YAY!!! ❤️</h1>
+      <p>You just made me the happiest person alive 🥰</p>
+
+      <h2 style="margin-top:20px;">Your surprise awaits... 🎁✨</h2>
+
+      <p style="font-size:18px;">
+        📍 <strong>165/183 City Road, Southbank, 3006</strong>
+      </p>
+
+      <p style="margin-top:20px;font-size:20px;color:#ff4d6d;">
+        See you there ❤️
+      </p>
+
+      <p id="typewriter"></p>
+    </div>
   `;
+
+  setTimeout(() => {
+    document.getElementById("romanticBox").style.opacity = "1";
+  }, 100);
+
+  launchConfetti();
+  typeWriterEffect();
+}
+
+function typeWriterEffect() {
+  const text = "I can’t wait to see you ❤️";
+  const el = document.getElementById("typewriter");
+  let i = 0;
+
+  function typing() {
+    if (i < text.length) {
+      el.innerHTML += text.charAt(i);
+      i++;
+      setTimeout(typing, 70);
+    }
+  }
+
+  typing();
+}
+
+function launchConfetti() {
+  for (let i = 0; i < 80; i++) {
+    const confetti = document.createElement("div");
+    confetti.innerHTML = "❤️";
+    confetti.style.position = "fixed";
+    confetti.style.fontSize = Math.random() * 20 + 15 + "px";
+    confetti.style.top = "-50px";
+    confetti.style.left = Math.random() * window.innerWidth + "px";
+    confetti.style.pointerEvents = "none";
+    confetti.style.zIndex = "9999";
+
+    document.body.appendChild(confetti);
+
+    const fall = confetti.animate(
+      [
+        { transform: "translateY(0px) rotate(0deg)" },
+        { transform: \`translateY(\${window.innerHeight + 100}px) rotate(720deg)\` }
+      ],
+      {
+        duration: Math.random() * 3000 + 3000,
+        easing: "ease-out"
+      }
+    );
+
+    setTimeout(() => {
+      confetti.remove();
+    }, 5000);
+  }
 }
 </script>
 
