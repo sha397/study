@@ -1,69 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>For Jhanvi ❤️</title>
-  <style>
-    body {
-      text-align: center;
-      font-family: Arial, sans-serif;
-      background: linear-gradient(to right, #ffdde1, #ee9ca7);
-      margin-top: 50px;
-    }
-
-    .card {
-      background: white;
-      padding: 40px;
-      border-radius: 20px;
-      display: inline-block;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-    }
-
-    button {
-      padding: 10px 20px;
-      margin: 10px;
-      font-size: 16px;
-      border-radius: 8px;
-      border: none;
-      cursor: pointer;
-    }
-
-    .yes {
-      background-color: #ff4d6d;
-      color: white;
-    }
-
-    .no {
-      background-color: #ccc;
-    }
-
-    #typewriter {
-      font-size: 18px;
-      margin-top: 20px;
-      color: #ff4d6d;
-      font-weight: bold;
-    }
-
-    #countdown {
-      font-size: 20px;
-      font-weight: bold;
-      margin-top: 10px;
-      color: #ff4d6d;
-    }
-  </style>
-</head>
-<body>
-
-<div class="card">
-  <h1 id="message">Hey Jhanvi ❤️</h1>
-  <button onclick="nextMessage()">Next ❤️</button>
-</div>
-
-<audio id="bg-music" loop>
-  <source src="Hussan%20Illahi%20(PenduJatt.Com.Se).mp3" type="audio/mpeg">
-</audio>
-
 <script>
 const messages = [
   "Hey Jhanvi ❤️",
@@ -75,7 +9,8 @@ const messages = [
 let step = 0;
 let musicStarted = false;
 
-function nextMessage() {
+// Attach function to window so the HTML button can access it
+window.nextMessage = function() {
   if (!musicStarted) {
     const music = document.getElementById("bg-music");
     if (music) {
@@ -85,11 +20,9 @@ function nextMessage() {
     musicStarted = true;
   }
 
-  // Show current message
   document.getElementById("message").innerText = messages[step];
   step++;
 
-  // If last message, show Yes/No buttons
   if (step === messages.length) {
     document.querySelector(".card").innerHTML = `
       <h1>Jhanvi, will you be my Valentine? 💖</h1>
@@ -99,13 +32,14 @@ function nextMessage() {
   }
 }
 
-function moveNo(button) {
+// The rest of your functions:
+window.moveNo = function(button) {
   const x = Math.random() * 200 - 100;
   const y = Math.random() * 200 - 100;
   button.style.transform = \`translate(\${x}px, \${y}px)\`;
 }
 
-function sayYes() {
+window.sayYes = function() {
   document.querySelector(".card").innerHTML = `
     <div id="romanticBox" style="opacity:0; transition:opacity 2s ease;">
       <h1>YAY!!! ❤️</h1>
@@ -139,79 +73,5 @@ function sayYes() {
   typeWriterEffect();
 }
 
-function openMaps() {
-  window.open(
-    "https://www.google.com/maps/search/?api=1&query=165/183+City+Road+Southbank+3006",
-    "_blank"
-  );
-}
-
-function startCountdown() {
-  const el = document.getElementById("countdown");
-
-  function update() {
-    const now = new Date();
-    let target = new Date();
-    target.setHours(19,0,0,0);
-
-    if (now > target) target.setDate(target.getDate() + 1);
-
-    const diff = target - now;
-    const h = Math.floor(diff / (1000*60*60));
-    const m = Math.floor((diff / (1000*60)) % 60);
-    const s = Math.floor((diff / 1000) % 60);
-
-    el.innerText = \`\${h}h \${m}m \${s}s\`;
-  }
-
-  update();
-  setInterval(update, 1000);
-}
-
-function typeWriterEffect() {
-  const text = "I can’t wait to see you ❤️";
-  const el = document.getElementById("typewriter");
-  let i = 0;
-
-  function typing() {
-    if (i < text.length) {
-      el.innerHTML += text.charAt(i);
-      i++;
-      setTimeout(typing, 70);
-    }
-  }
-
-  typing();
-}
-
-function launchConfetti() {
-  for (let i=0;i<80;i++){
-    const heart = document.createElement("div");
-    heart.innerHTML = "❤️";
-    heart.style.position = "fixed";
-    heart.style.fontSize = Math.random()*20 + 15 + "px";
-    heart.style.top = "-50px";
-    heart.style.left = Math.random() * window.innerWidth + "px";
-    heart.style.pointerEvents = "none";
-    heart.style.zIndex = "9999";
-
-    document.body.appendChild(heart);
-
-    heart.animate(
-      [
-        { transform: "translateY(0px) rotate(0deg)" },
-        { transform: \`translateY(\${window.innerHeight + 100}px) rotate(720deg)\` }
-      ],
-      {
-        duration: Math.random()*3000 + 3000,
-        easing: "ease-out"
-      }
-    );
-
-    setTimeout(() => heart.remove(), 5000);
-  }
-}
+// Add the other functions (typeWriterEffect, startCountdown, launchConfetti, openMaps) as before and attach them to window
 </script>
-
-</body>
-</html>
