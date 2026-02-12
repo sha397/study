@@ -1,63 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Be My Valentine ❤️</title>
 
 <style>
-  body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background: linear-gradient(135deg, #ffd1dc, #ffe4e1);
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow-x: hidden;
-  }
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg, #ffd1dc, #ffe4e1);
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow-x: hidden;
+}
 
-  .card {
-    background: white;
-    padding: 40px;
-    border-radius: 20px;
-    text-align: center;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-    max-width: 400px;
-  }
+.card {
+  background: white;
+  padding: 40px;
+  border-radius: 20px;
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  max-width: 420px;
+}
 
-  h1 {
-    margin-bottom: 20px;
-  }
+button {
+  padding: 12px 25px;
+  font-size: 18px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  margin: 10px;
+  transition: 0.3s;
+}
 
-  button {
-    padding: 12px 25px;
-    font-size: 18px;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-    margin: 10px;
-    transition: 0.3s;
-  }
+.yes {
+  background-color: #ff4d6d;
+  color: white;
+}
 
-  .yes {
-    background-color: #ff4d6d;
-    color: white;
-  }
+.no {
+  background-color: #ddd;
+  position: relative;
+}
 
-  .no {
-    background-color: #ddd;
-    position: relative;
-  }
+.fade-in {
+  opacity: 0;
+  transition: opacity 2s ease;
+}
 </style>
 </head>
 
 <body>
 
-<!-- Background Music -->
+<!-- 🎵 Music -->
 <audio id="bg-music" loop>
   <source src="Hussan%20Illahi%20(PenduJatt.Com.Se).mp3" type="audio/mpeg">
-  Your browser does not support the audio element.
 </audio>
 
 <div class="card">
@@ -66,88 +66,157 @@
 </div>
 
 <script>
-  const messages = [
-    "Hey Jhanvi ❤️",
-    "I have something important to ask you...",
-    "You make my life so much better ✨",
-    "Jhanvi, will you be my Valentine? 💖"
-  ];
+const messages = [
+  "Hey Jhanvi ❤️",
+  "I have something important to ask you...",
+  "You make my life so much better ✨",
+  "Jhanvi, will you be my Valentine? 💖"
+];
 
-  let step = 0;
-  let musicStarted = false;
+let step = 0;
+let musicStarted = false;
 
-  function nextMessage() {
-    if (!musicStarted) {
-      const music = document.getElementById("bg-music");
-      music.volume = 0.7;
-      music.play();
-      musicStarted = true;
-    }
-
-    step++;
-
-    if (step < messages.length) {
-      document.getElementById("message").innerText = messages[step];
-    }
-
-    if (step === messages.length - 1) {
-      document.querySelector(".card").innerHTML = `
-        <h1>Jhanvi, will you be my Valentine? 💖</h1>
-        <button class="yes" onclick="sayYes()">Yes 💕</button>
-        <button class="no" onmouseover="moveNo(this)">No 😢</button>
-      `;
-    }
+function nextMessage() {
+  if (!musicStarted) {
+    const music = document.getElementById("bg-music");
+    music.volume = 0.7;
+    music.play();
+    musicStarted = true;
   }
 
-  function sayYes() {
+  step++;
+
+  if (step < messages.length) {
+    document.getElementById("message").innerText = messages[step];
+  }
+
+  if (step === messages.length - 1) {
     document.querySelector(".card").innerHTML = `
+      <h1>Jhanvi, will you be my Valentine? 💖</h1>
+      <button class="yes" onclick="sayYes()">Yes 💕</button>
+      <button class="no" onmouseover="moveNo(this)">No 😢</button>
+    `;
+  }
+}
+
+function moveNo(button) {
+  const x = Math.random() * 200 - 100;
+  const y = Math.random() * 200 - 100;
+  button.style.transform = \`translate(\${x}px, \${y}px)\`;
+}
+
+function sayYes() {
+  document.querySelector(".card").innerHTML = `
+    <div id="romanticContent" class="fade-in">
       <h1>YAY!!! ❤️</h1>
       <p>You just made me the happiest person alive 🥰</p>
-    `;
-    launchHeartConfetti();
+
+      <h2 style="margin-top:20px;">Your surprise awaits... 🎁✨</h2>
+
+      <p style="font-size:18px;">
+        📍 <strong>165/183 City Road, Southbank, 3006</strong>
+      </p>
+
+      <button onclick="openMaps()" 
+        style="background:#ff4d6d;color:white;">
+        Open in Google Maps 🗺️
+      </button>
+
+      <h3 style="margin-top:20px;">Countdown to 7:00 PM ⏳</h3>
+      <div id="countdown" style="font-size:20px;font-weight:bold;"></div>
+
+      <p id="typewriter" style="margin-top:20px;font-size:18px;"></p>
+    </div>
+  `;
+
+  launchHeartConfetti();
+  startCountdown();
+  typeWriterEffect();
+
+  setTimeout(() => {
+    document.getElementById("romanticContent").style.opacity = "1";
+  }, 100);
+}
+
+function openMaps() {
+  window.open(
+    "https://www.google.com/maps/search/?api=1&query=165/183+City+Road+Southbank+3006",
+    "_blank"
+  );
+}
+
+function startCountdown() {
+  const el = document.getElementById("countdown");
+
+  function update() {
+    const now = new Date();
+    const target = new Date();
+    target.setHours(19, 0, 0, 0);
+
+    if (now > target) {
+      target.setDate(target.getDate() + 1);
+    }
+
+    const diff = target - now;
+
+    const h = Math.floor(diff / (1000*60*60));
+    const m = Math.floor((diff / (1000*60)) % 60);
+    const s = Math.floor((diff / 1000) % 60);
+
+    el.innerHTML = \`\${h}h \${m}m \${s}s\`;
   }
 
-  function moveNo(button) {
-    const x = Math.random() * 200 - 100;
-    const y = Math.random() * 200 - 100;
-    button.style.transform = `translate(${x}px, ${y}px)`;
-  }
+  update();
+  setInterval(update, 1000);
+}
 
-  // ❤️ Heart Confetti Function
-  function launchHeartConfetti() {
-    const colors = ["#ff4d6d", "#ffb6c1", "#ffd1dc", "#ffe4e1"];
-    for (let i = 0; i < 100; i++) {
-      const heart = document.createElement("div");
-      heart.innerHTML = "❤️";
-      heart.style.position = "fixed";
-      heart.style.fontSize = Math.random() * 24 + 16 + "px"; // 16px to 40px
-      heart.style.top = "-50px";
-      heart.style.left = Math.random() * window.innerWidth + "px";
-      heart.style.opacity = Math.random() * 0.8 + 0.2;
-      heart.style.pointerEvents = "none";
-      heart.style.zIndex = 9999;
+function typeWriterEffect() {
+  const text = "I can’t wait to see you ❤️";
+  const el = document.getElementById("typewriter");
+  let i = 0;
 
-      document.body.appendChild(heart);
-
-      const endX = Math.random() * window.innerWidth - heart.offsetLeft;
-      const endY = window.innerHeight + 50;
-      const rotate = Math.random() * 720;
-
-      heart.animate(
-        [
-          { transform: `translate(0, 0) rotate(0deg)` },
-          { transform: `translate(${endX}px, ${endY}px) rotate(${rotate}deg)` }
-        ],
-        {
-          duration: Math.random() * 3000 + 3000, // 3-6 seconds
-          iterations: 1,
-          easing: "ease-out"
-        }
-      );
-
-      setTimeout(() => heart.remove(), 6000);
+  function typing() {
+    if (i < text.length) {
+      el.innerHTML += text.charAt(i);
+      i++;
+      setTimeout(typing, 70);
     }
   }
+
+  typing();
+}
+
+function launchHeartConfetti() {
+  for (let i = 0; i < 100; i++) {
+    const heart = document.createElement("div");
+    heart.innerHTML = "❤️";
+    heart.style.position = "fixed";
+    heart.style.fontSize = Math.random() * 24 + 16 + "px";
+    heart.style.top = "-50px";
+    heart.style.left = Math.random() * window.innerWidth + "px";
+    heart.style.pointerEvents = "none";
+    heart.style.zIndex = 9999;
+
+    document.body.appendChild(heart);
+
+    const endX = Math.random() * window.innerWidth - heart.offsetLeft;
+    const endY = window.innerHeight + 50;
+    const rotate = Math.random() * 720;
+
+    heart.animate(
+      [
+        { transform: "translate(0,0) rotate(0deg)" },
+        { transform: \`translate(\${endX}px,\${endY}px) rotate(\${rotate}deg)\` }
+      ],
+      {
+        duration: Math.random() * 3000 + 3000,
+        easing: "ease-out"
+      }
+    );
+
+    setTimeout(() => heart.remove(), 6000);
+  }
+}
 </script>
 
 </body>
