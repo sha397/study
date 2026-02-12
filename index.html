@@ -9,7 +9,7 @@
       text-align: center;
       font-family: Arial, sans-serif;
       background: linear-gradient(to right, #ffdde1, #ee9ca7);
-      margin-top: 100px;
+      margin-top: 50px;
     }
 
     .card {
@@ -43,6 +43,13 @@
       margin-top: 20px;
       color: #ff4d6d;
       font-weight: bold;
+    }
+
+    #countdown {
+      font-size: 20px;
+      font-weight: bold;
+      margin-top: 10px;
+      color: #ff4d6d;
     }
   </style>
 </head>
@@ -78,13 +85,12 @@ function nextMessage() {
     musicStarted = true;
   }
 
+  // Show current message
+  document.getElementById("message").innerText = messages[step];
   step++;
 
-  if (step < messages.length) {
-    document.getElementById("message").innerText = messages[step];
-  }
-
-  if (step === messages.length - 1) {
+  // If last message, show Yes/No buttons
+  if (step === messages.length) {
     document.querySelector(".card").innerHTML = `
       <h1>Jhanvi, will you be my Valentine? 💖</h1>
       <button class="yes" onclick="sayYes()">Yes 💕</button>
@@ -111,9 +117,14 @@ function sayYes() {
         📍 <strong>165/183 City Road, Southbank, 3006</strong>
       </p>
 
-      <p style="margin-top:20px;font-size:20px;color:#ff4d6d;">
-        See you there ❤️
-      </p>
+      <button onclick="openMaps()" style="background:#ff4d6d;color:white;padding:10px 20px;border:none;border-radius:8px;">
+        Open in Google Maps 🗺️
+      </button>
+
+      <h3 style="margin-top:20px;">Countdown to 7:00 PM ⏳</h3>
+      <div id="countdown"></div>
+
+      <p style="margin-top:20px;font-size:20px;color:#ff4d6d;">See you there ❤️</p>
 
       <p id="typewriter"></p>
     </div>
@@ -124,7 +135,37 @@ function sayYes() {
   }, 100);
 
   launchConfetti();
+  startCountdown();
   typeWriterEffect();
+}
+
+function openMaps() {
+  window.open(
+    "https://www.google.com/maps/search/?api=1&query=165/183+City+Road+Southbank+3006",
+    "_blank"
+  );
+}
+
+function startCountdown() {
+  const el = document.getElementById("countdown");
+
+  function update() {
+    const now = new Date();
+    let target = new Date();
+    target.setHours(19,0,0,0);
+
+    if (now > target) target.setDate(target.getDate() + 1);
+
+    const diff = target - now;
+    const h = Math.floor(diff / (1000*60*60));
+    const m = Math.floor((diff / (1000*60)) % 60);
+    const s = Math.floor((diff / 1000) % 60);
+
+    el.innerText = \`\${h}h \${m}m \${s}s\`;
+  }
+
+  update();
+  setInterval(update, 1000);
 }
 
 function typeWriterEffect() {
@@ -144,32 +185,30 @@ function typeWriterEffect() {
 }
 
 function launchConfetti() {
-  for (let i = 0; i < 80; i++) {
-    const confetti = document.createElement("div");
-    confetti.innerHTML = "❤️";
-    confetti.style.position = "fixed";
-    confetti.style.fontSize = Math.random() * 20 + 15 + "px";
-    confetti.style.top = "-50px";
-    confetti.style.left = Math.random() * window.innerWidth + "px";
-    confetti.style.pointerEvents = "none";
-    confetti.style.zIndex = "9999";
+  for (let i=0;i<80;i++){
+    const heart = document.createElement("div");
+    heart.innerHTML = "❤️";
+    heart.style.position = "fixed";
+    heart.style.fontSize = Math.random()*20 + 15 + "px";
+    heart.style.top = "-50px";
+    heart.style.left = Math.random() * window.innerWidth + "px";
+    heart.style.pointerEvents = "none";
+    heart.style.zIndex = "9999";
 
-    document.body.appendChild(confetti);
+    document.body.appendChild(heart);
 
-    const fall = confetti.animate(
+    heart.animate(
       [
         { transform: "translateY(0px) rotate(0deg)" },
         { transform: \`translateY(\${window.innerHeight + 100}px) rotate(720deg)\` }
       ],
       {
-        duration: Math.random() * 3000 + 3000,
+        duration: Math.random()*3000 + 3000,
         easing: "ease-out"
       }
     );
 
-    setTimeout(() => {
-      confetti.remove();
-    }, 5000);
+    setTimeout(() => heart.remove(), 5000);
   }
 }
 </script>
